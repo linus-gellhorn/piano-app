@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react";
 import useSound from "use-sound";
-
-interface PianoKeyProps {
-  name: string;
-  sound: string;
-  keyboardPress: string;
-  active: boolean;
-}
+import { PianoKeyProps } from "../types";
 
 export default function PianoKey(props: PianoKeyProps): JSX.Element {
   const [play, { stop }] = useSound(props.sound);

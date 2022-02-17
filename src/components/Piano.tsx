@@ -2,9 +2,11 @@
 // 1. Add piano on button to simulate necessary initial click to enable sound
 
 import { useState } from "react";
+import { noteData } from "../types";
+import findMatchingNoteData from "../utils/findMatchingNoteData";
 import PianoKey from "./PianoKey";
 
-const notesData = [
+export const notesData: noteData[] = [
   { note: "C4", sound: "/sounds/C4.wav", keyboardPress: "z" },
   { note: "C#4", sound: "/sounds/Csharp4.wav", keyboardPress: "s" },
   { note: "D4", sound: "/sounds/D4.wav", keyboardPress: "x" },
@@ -25,14 +27,10 @@ export default function Piano(): JSX.Element {
   }>({});
 
   function updateActiveNote(eventKey: string, newActiveNote: boolean) {
-    const matchingNoteData = notesData.find(
-      (noteData) => noteData.keyboardPress === eventKey
-    );
-    console.log(matchingNoteData);
-    console.log(matchingNoteData);
-    if (matchingNoteData) {
+    const matchedNoteData = findMatchingNoteData(notesData, eventKey);
+    if (matchedNoteData) {
       const activeNotesCopy = { ...activeNotes };
-      activeNotesCopy[matchingNoteData.note] = newActiveNote;
+      activeNotesCopy[matchedNoteData.note] = newActiveNote;
       setActiveNotes(activeNotesCopy);
     }
   }

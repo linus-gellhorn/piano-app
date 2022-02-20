@@ -11,8 +11,13 @@
   background-color: ivory;
   height: 100px;
   width: 30px;
+  border: black solid 1px;
 }
 
-.active {
-  border: blue solid 3px;
+.natural-active {
+  background-color: rgb(228, 228, 201);
+}
+
+.sharp-active {
+  background-color: rgb(48, 44, 44);
 }

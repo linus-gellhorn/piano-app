@@ -24,7 +24,12 @@ export default function PianoKey(props: PianoKeyProps): JSX.Element {
       <button
         className={
           (props.name.includes("#") ? "sharp" : "natural") +
-          (props.active || active ? " active" : "")
+          ((props.active || active) && props.name.includes("#")
+            ? " sharp-active"
+            : "") +
+          ((props.active || active) && !props.name.includes("#")
+            ? " natural-active"
+            : "")
         }
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

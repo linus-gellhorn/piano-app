@@ -7,11 +7,15 @@ export default function PianoKey(props: PianoKeyProps): JSX.Element {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    props.active ? play() : false && stop();
-  }, [props.active, play, stop]);
+    if (props.pianoOn) {
+      props.active ? play() : false && stop();
+    }
+  }, [props.active, play, stop, props.pianoOn]);
 
   const handleMouseDown = () => {
-    play();
+    if (props.pianoOn) {
+      play();
+    }
     setActive(!active);
   };
 
@@ -24,7 +28,12 @@ export default function PianoKey(props: PianoKeyProps): JSX.Element {
       <button
         className={
           (props.name.includes("#") ? "sharp" : "natural") +
-          (props.active || active ? " active" : "")
+          ((props.active || active) && props.name.includes("#")
+            ? " sharp-active"
+            : "") +
+          ((props.active || active) && !props.name.includes("#")
+            ? " natural-active"
+            : "")
         }
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}

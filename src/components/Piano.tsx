@@ -1,6 +1,3 @@
-// TODO:
-// 1. Add piano on button to simulate necessary initial click to enable sound
-
 import { useState } from "react";
 import { noteData } from "../types";
 import findMatchingNoteData from "../utils/findMatchingNoteData";
@@ -25,6 +22,7 @@ export default function Piano(): JSX.Element {
   const [activeNotes, setActiveNotes] = useState<{
     [noteName: string]: boolean;
   }>({});
+  const [pianoOn, setPianoOn] = useState(false);
 
   function updateActiveNote(eventKey: string, newActiveNote: boolean) {
     const matchedNoteData = findMatchingNoteData(notesData, eventKey);
@@ -44,14 +42,22 @@ export default function Piano(): JSX.Element {
   };
 
   return (
-    <>
-      <h1>Piano App</h1>
-      <p>Click the piano first to start using the keys</p>
-      <p>Press 'z' for middle C, 's' for C#, 'x' for 'D', etc.</p>
+    <div className="main">
+      <h1>🎹 Piano App 🎹</h1>
+      <p>Turn the piano on to start playing!</p>
+      <p>Control the piano with your keyboard using 'Z', 'S', 'X' etc.</p>
       <div
         onKeyDown={(event) => handleKeyDown(event.key)}
         onKeyUp={(event) => handleKeyUp(event.key)}
+        className="piano"
       >
+        <button
+          className={"button" + (pianoOn ? " on" : "")}
+          onClick={() => setPianoOn(!pianoOn)}
+        >
+          {pianoOn ? "On" : "Off"}
+        </button>
+        <hr />
         {notesData.map((noteData) => (
           <PianoKey
             key={noteData.note}
@@ -59,9 +65,10 @@ export default function Piano(): JSX.Element {
             sound={noteData.sound}
             keyboardPress={noteData.keyboardPress}
             active={activeNotes[noteData.note] ?? false}
+            pianoOn={pianoOn}
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }

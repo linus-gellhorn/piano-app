@@ -3,6 +3,7 @@ export interface PianoKeyProps {
   sound: string;
   keyboardPress: string;
   active: boolean;
+  pianoOn: boolean;
 }
 
 export interface noteData {
